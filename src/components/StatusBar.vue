@@ -4,7 +4,7 @@
     <div class="score">Score: {{ score }}</div>
     <div>Time Left: {{ timeLeft }} seconds</div>
 
-    <div class="wave">Oleada: {{ wave }}</div>
+    <div class="wave">Wave: {{ wave }}</div>
   </div>
 </template>
 
