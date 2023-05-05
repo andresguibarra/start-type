@@ -3,26 +3,18 @@
     <h2 v-if="!timeIsUp">Congratulations! You won!</h2>
     <h2 v-else>Best luck next time and... may the force be with you</h2>
     <p>Your score: {{ score }}</p>
-    <p>Waves completed: {{ wave }}</p>
+    <p>Waves completed: {{ waveCounter }}</p>
     <button @click="$emit('restart')">Restart</button>
   </div>
 </template>
 
 <script setup lang="ts">
-defineProps({
-  score: {
-    type: Number,
-    required: true
-  },
-  wave: {
-    type: Number,
-    required: true
-  },
-  timeIsUp: {
-    type: Boolean,
-    required: true
-  }
-})
+import { useSwapiStore } from '@/store';
+import { storeToRefs } from 'pinia';
+
+const store = useSwapiStore()
+const { score, waveCounter, timeIsUp } = storeToRefs(store)
+
 </script>
 
 <style scoped>

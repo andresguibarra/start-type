@@ -2,29 +2,41 @@
   <div class="input-container">
     <input
       class="input-box"
+      ref="$inputBox"
       type="text"
       placeholder="Attack by typing the ship name..."
-      :value="modelValue"
+      :value="typedValue"
       @input="updateInputValue"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-defineProps({
-  modelValue: String
-})
+import { useSwapiStore } from '@/store'
+import { storeToRefs } from 'pinia'
+import { onMounted, ref } from 'vue'
 
-const emit = defineEmits(['update:modelValue'])
+const store = useSwapiStore()
+const { timerStarted, typedValue } = storeToRefs(store)
+const $inputBox = ref<HTMLElement>()
 
-const updateInputValue = (event: Event) => {
+const updateInputValue = async (event: Event) => {
+  store.updateTypedValue((event.target as HTMLInputElement).value)
   const inputContainer = document.querySelector('.input-container')
   inputContainer?.classList.add('animate-input')
   setTimeout(() => {
     inputContainer?.classList.remove('animate-input')
   }, 500)
-  emit('update:modelValue', (event.target as HTMLInputElement).value)
+  if (!timerStarted.value && typedValue.value !== '') {
+    store.startTimer()
+  }
+
+  await store.updateWordProgress()
 }
+
+onMounted(() => {
+  $inputBox!.value!.focus()
+})
 </script>
 
 <style>

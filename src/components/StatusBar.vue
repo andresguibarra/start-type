@@ -4,25 +4,17 @@
     <div class="score">Score: {{ score }}</div>
     <div>Time Left: {{ timeLeft }} seconds</div>
 
-    <div class="wave">Wave: {{ wave }}</div>
+    <div class="wave">Wave: {{ waveCounter }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
-defineProps({
-  score: {
-    type: Number,
-    required: true
-  },
-  wave: {
-    type: Number,
-    required: true
-  },
-  timeLeft: {
-    type: Number,
-    required: true
-  }
-})
+import { useSwapiStore } from '@/store';
+import { storeToRefs } from 'pinia';
+
+const store = useSwapiStore()
+const { score, waveCounter, timeLeft } = storeToRefs(store)
+
 </script>
 
 <style scoped>

@@ -1,11 +1,12 @@
 import type { Ship } from '@/components/models/ship.model';
+import type { ShipWord } from '@/components/models/ship-word.model';
 import axios from 'axios';
 
 export const fetchShips = async (url: string) => {
   try {
     const response = await axios.get(url);
     const results = response.data.results;
-    const shipsList = results.map((ship: Ship) => ({
+    const shipsList: ShipWord[] = results.map((ship: Ship) => ({
       word: ship.name,
       ship: ship,
       progress: Array(ship.name.length).fill(null),

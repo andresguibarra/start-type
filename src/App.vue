@@ -5,8 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import Game from './components/Game.vue'
+import Game from './components/TheGame.vue'
 </script>
 
 <style scoped>

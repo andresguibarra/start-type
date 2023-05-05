@@ -20,12 +20,12 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
-import type { Ship } from './models/ship.model'
 import Popper from 'vue3-popper'
 import PeopleTableVue from './PeopleTable.vue'
+import { useSwapiStore } from '@/store';
+import { storeToRefs } from 'pinia';
 
-defineProps<{ destroyedShips: Ship[] }>()
+const { destroyedShips } = storeToRefs(useSwapiStore())
 </script>
 
 <style scoped>
