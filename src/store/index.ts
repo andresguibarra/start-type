@@ -77,35 +77,26 @@ export const useSwapiStore = defineStore({
     },
     async updateWordProgress() {
       for (const wordObj of this.words) {
-        let isMatchingWord = true
-        if (this.typedValue === '') {
+        if (wordObj.completed) continue
+
+        if (this.typedValue === '' || this.typedValue[0] !== wordObj.word[0]) {
           wordObj.progress.fill(null)
-          wordObj.isMatching = false
           continue
         }
-        const lowercaseTypedValue = this.typedValue.toLowerCase()
-        const lowercaseWord = wordObj.word.toLowerCase()
-        for (let i = 0; i < lowercaseWord.length; i++) {
-          const letterMatches = lowercaseTypedValue[i] === lowercaseWord[i]
 
-          if (isMatchingWord && letterMatches) {
-            wordObj.progress[i] = true
-            wordObj.isMatching = true
-          } else if (isMatchingWord && !letterMatches && lowercaseTypedValue[i] !== undefined) {
-            wordObj.progress[i] = false
-            isMatchingWord = false
-          } else {
-            wordObj.progress[i] = null
-          }
+        for (let i = 0; i < this.typedValue.length && i < wordObj.word.length; i++) {
+          const letterMatches = this.typedValue[i] === wordObj.word[i]
+          wordObj.progress[i] = letterMatches
+          wordObj.progress.fill(null, i + 1)
         }
 
-        if (!isMatchingWord && !wordObj.isMatching) {
-          wordObj.progress.fill(null)
-        } else if (isMatchingWord && lowercaseWord.length === lowercaseTypedValue.length) {
+        if (this.typedValue.length === wordObj.word.length && wordObj.progress.every((p) => p)) {
           wordObj.completed = true
           this.typedValue = ''
           this.score++
           this.destroyedShips.push(wordObj.ship)
+          this.words.forEach((w) => w.progress.fill(null))
+          break
         }
       }
       await this.updateDisplayedWords()

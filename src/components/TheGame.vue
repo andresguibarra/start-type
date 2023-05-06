@@ -10,7 +10,7 @@
       <StatusBar />
       <div v-if="!isLoading" class="enemy-ships">
         <div class="words-container">
-          <Word v-for="(wordObj, index) in words" :key="index" :wordObj="wordObj"></Word>
+          <TheWord v-for="(wordObj, index) in words" :key="index" :wordObj="wordObj"></TheWord>
         </div>
       </div>
       <LoadingSpinner v-if="isLoading" />
@@ -18,7 +18,7 @@
       <button v-if="!isLoading && false" @click="endWave()">End wave (dev only)</button>
     </template>
     <EndGame v-else-if="gameOver && !isLoading" @restart="restartGame" />
-    <DestroyedShipsLog />
+    
   </div>
 </template>
 
@@ -26,7 +26,7 @@
 import { useSwapiStore } from '@/store'
 import { storeToRefs } from 'pinia'
 import InputBox from './InputBox.vue'
-import Word from './Word.vue'
+import TheWord from './TheWord.vue'
 import StatusBar from './StatusBar.vue'
 import EndGame from './EndGame.vue'
 import LoadingSpinner from './LoadingSpinner.vue'

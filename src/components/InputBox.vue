@@ -21,7 +21,7 @@ const { timerStarted, typedValue } = storeToRefs(store)
 const $inputBox = ref<HTMLElement>()
 
 const updateInputValue = async (event: Event) => {
-  store.updateTypedValue((event.target as HTMLInputElement).value)
+  store.updateTypedValue((event.target as HTMLInputElement).value.toLowerCase())
   const inputContainer = document.querySelector('.input-container')
   inputContainer?.classList.add('animate-input')
   setTimeout(() => {
