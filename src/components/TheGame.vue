@@ -18,7 +18,7 @@
       <button v-if="!isLoading && false" @click="endWave()">End wave (dev only)</button>
     </template>
     <EndGame v-else-if="gameOver && !isLoading" @restart="restartGame" />
-    
+    <DestroyedShipsLog/>
   </div>
 </template>
 
